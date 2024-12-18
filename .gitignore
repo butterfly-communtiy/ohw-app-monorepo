@@ -3,6 +3,8 @@
 
 # React Router
 /.react-router/
-/build/
+build/
 
 .eslintcache
+
+app/protocols/protobuf/*.ts

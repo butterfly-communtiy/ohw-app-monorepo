@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package ohw;
+
+message Data {
+  oneof payload {
+    Unknown unknown = 2;
+    VersionRequest version_request = 10;
+    VersionResponse version_response = 11;
+    FeatureRequest feature_request = 20;
+    FeatureResponse feature_response = 21;
+  }
+}
+
+message Unknown {}
+
+message VersionRequest {}
+
+message VersionResponse { string version = 1; }
+
+message FeatureRequest {}
+
+message FeatureResponse {
+    uint32 features = 1;
+}
