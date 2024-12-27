@@ -1,4 +1,5 @@
-import { Data } from "~/protocols/protobuf/ohw";
+import { ReqData, ResData } from "~/protocols/protobuf/ohw";
+import { ethers } from "ethers";
 
 export interface SerialProtocolConfig {
   readonly MAGIC: Uint8Array;
@@ -33,18 +34,18 @@ export class SerialManager {
   private reader: ReadableStreamDefaultReader<Uint8Array> | null = null;
   private buffer: Uint8Array = new Uint8Array(0);
   private readonly config: SerialConfig;
-  private messageHandler?: (data: Data) => void;
+  private messageHandler?: (data: ResData) => void;
   private readingStateHandler?: (reading: boolean) => void;
 
   constructor(config: SerialConfig = DEFAULT_SERIAL_CONFIG) {
     this.config = config;
   }
 
-  onMessage(handler: (data: Data) => void): void {
+  onMessage(handler: (data: ResData) => void): void {
     this.messageHandler = handler;
   }
 
-  onReadingState(handler: (reading: boolean) => void): void { 
+  onReadingState(handler: (reading: boolean) => void): void {
     this.readingStateHandler = handler;
   }
 
@@ -59,17 +60,16 @@ export class SerialManager {
     await this.port.open(this.config.PORT);
 
     this.startReading();
-
   }
 
   async close(): Promise<void> {
     if (this.reader) {
       await this.reader.cancel().catch(() => {});
-      this.reader.releaseLock();
+      this.reader?.releaseLock();
     }
     this.reader = null;
     if (this.port && this.port.readable) {
-      await this.port.close();
+      await this.port.close().catch(() => {});
     }
     this.buffer = new Uint8Array(0);
   }
@@ -89,8 +89,6 @@ export class SerialManager {
         newBuffer.set(this.buffer);
         newBuffer.set(value, this.buffer.length);
         this.buffer = newBuffer;
-
-        console.log(this.buffer);
 
         this.processBuffer();
       }
@@ -125,9 +123,9 @@ export class SerialManager {
         this.config.PROTOCOL.HEADER_LENGTH,
         this.config.PROTOCOL.HEADER_LENGTH + length,
       );
-      
-      const data = Data.fromBinary(message);
-      
+
+      const data = ResData.fromBinary(message);
+
       this.messageHandler?.(data);
 
       this.buffer = this.buffer.slice(
@@ -139,4 +137,43 @@ export class SerialManager {
   private arrayEquals(a: Uint8Array, b: Uint8Array): boolean {
     return a.length === b.length && a.every((val, i) => val === b[i]);
   }
+
+  async send(data: Uint8Array): Promise<void> {
+    if (!this.port?.writable) {
+      throw new Error("Serial port is not writable");
+    }
+    const length = data.length;
+
+    if (length > this.config.PROTOCOL.MAX_LENGTH) {
+      throw new Error("Message too long");
+    }
+
+    const message = new Uint8Array(this.config.PROTOCOL.HEADER_LENGTH + length);
+
+    message.set(this.config.PROTOCOL.MAGIC, 0);
+
+    message[3] = (length >> 8) & 0xff;
+    message[4] = length & 0xff;
+
+    message.set(data, this.config.PROTOCOL.HEADER_LENGTH);
+
+    try {
+      const writer = this.port.writable.getWriter();
+      await writer.write(message);
+      writer.releaseLock();
+    } catch (error) {
+      console.error("Write Port Error:", error);
+      throw error;
+    }
+  }
+
+  async sendProtobuf(data: ReqData): Promise<void> {
+    console.log(data.payload);
+    const bytes = ReqData.toBinary(data);
+    await this.send(bytes);
+  }
+
+  publicKeyToAddress(publicKey: Uint8Array): string {
+    return ethers.computeAddress(ethers.hexlify(publicKey));
+}
 }
