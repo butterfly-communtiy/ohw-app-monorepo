@@ -23,7 +23,7 @@ export function TestPage() {
 
   useEffect(() => {
     serialManager.onMessage((data) => {
-      console.log(data.payload)
+      console.log(data.payload);
       switch (data.payload.oneofKind) {
         case "versionResponse": {
           const version = data.payload.versionResponse;
@@ -43,8 +43,8 @@ export function TestPage() {
         }
         case "signResponse": {
           const bytes = data.payload.signResponse.signature;
-          const sign = ethers.Signature.from(ethers.hexlify(bytes));
-          setSignature(sign.compactSerialized);
+          const sign = ethers.Signature.from(ethers.hexlify(bytes)).serialized;
+          setSignature(sign);
           break;
         }
         default:
@@ -126,7 +126,7 @@ export function TestPage() {
 
     await serialManager.sendProtobuf(initRequest);
   };
-  
+
   const signMessage = async () => {
     const hash = ethers.hashMessage(message);
 
