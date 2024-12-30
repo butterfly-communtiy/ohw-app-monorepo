@@ -175,5 +175,5 @@ export class SerialManager {
 
   publicKeyToAddress(publicKey: Uint8Array): string {
     return ethers.computeAddress(ethers.hexlify(publicKey));
-}
+  }
 }

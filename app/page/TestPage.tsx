@@ -42,9 +42,39 @@ export function TestPage() {
           break;
         }
         case "signResponse": {
-          const bytes = data.payload.signResponse.signature;
-          const sign = ethers.Signature.from(ethers.hexlify(bytes)).serialized;
-          setSignature(sign);
+          const signature = data.payload.signResponse.signature;
+          const hash = data.payload.signResponse.preHash;
+          const recoveryId = data.payload.signResponse.recoveryId;
+          const public_key = data.payload.signResponse.publicKey;
+
+          let signature_with_id = "";
+
+          if (recoveryId) {
+            signature_with_id =
+              ethers.hexlify(signature) +
+              ethers.hexlify(new Uint8Array([recoveryId + 27])).slice(2);
+            setSignature(ethers.hexlify(signature_with_id));
+            return;
+          }
+
+          signature_with_id = ethers.hexlify(signature) + "1b";
+
+          const check1 = ethers.recoverAddress(hash, signature_with_id);
+
+          if (check1 == serialManager.publicKeyToAddress(public_key)) {
+            setSignature(ethers.hexlify(signature_with_id));
+            return;
+          }
+
+          signature_with_id = ethers.hexlify(signature) + "1c";
+
+          const check2 = ethers.recoverAddress(hash, signature_with_id);
+
+          if (check2 == serialManager.publicKeyToAddress(public_key)) {
+            setSignature(ethers.hexlify(signature_with_id));
+            return;
+          }
+
           break;
         }
         default:
@@ -135,7 +165,7 @@ export function TestPage() {
         oneofKind: "signRequest",
         signRequest: SignRequest.create({
           id: 0,
-          message: ethers.getBytesCopy(hash),
+          preHash: ethers.getBytesCopy(hash),
           path: path,
         }),
       },
