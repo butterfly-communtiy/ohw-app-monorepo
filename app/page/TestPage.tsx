@@ -177,7 +177,7 @@ export function TestPage() {
     <div className="max-w-2xl mx-auto p-4 space-y-4">
       <div className="flex justify-end mb-4">
         <button
-          onClick={() => window.location.href = 'https://ohw-flash.lastline.tech'}
+           onClick={() => window.open('https://ohw-flash.lastline.tech', '_blank')}
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors mr-[20px]"
         >
           Flash
