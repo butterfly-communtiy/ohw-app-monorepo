@@ -159,7 +159,11 @@ export class SerialManager {
 
     try {
       const writer = this.port.writable.getWriter();
-      await writer.write(message);
+      // TODO: esp32c3 builtin usb serial/jtag fix
+      for (let i = 0; i < message.length; i++) {
+        await writer.write(new Uint8Array([message[i]]));
+        await writer.ready;
+      }
       writer.releaseLock();
     } catch (error) {
       console.error("Write Port Error:", error);
