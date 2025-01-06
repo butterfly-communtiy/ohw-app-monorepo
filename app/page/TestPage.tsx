@@ -245,7 +245,7 @@ export function TestPage() {
         )}
       </div>
 
-      <div className="flex" style={{ height: "500px" }}></div>
+      <div className="flex" style={{ height: "1000px" }}></div>
 
       <div className="flex">
         <div className="w-1/4 text-right pr-4 pt-2">Path :</div>
@@ -279,7 +279,7 @@ export function TestPage() {
         />
       </div>
 
-      <div className="flex" style={{ height: "500px" }}></div>
+      <div className="flex" style={{ height: "1000px" }}></div>
 
       <div className="flex">
         <div className="w-1/4 text-right pr-4 pt-2">Message :</div>
@@ -313,7 +313,7 @@ export function TestPage() {
         />
       </div>
 
-      <div className="flex" style={{ height: "500px" }}></div>
+      <div className="flex" style={{ height: "1000px" }}></div>
     </div>
   );
 }
