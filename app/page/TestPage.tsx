@@ -96,6 +96,12 @@ export function TestPage() {
   }, [serialManager]);
 
   const handleConnect = async () => {
+    if (!navigator.serial) {
+      alert(
+        "Web Serial API is only supported in Chrome/Edge browsers. Please switch to Chrome or Edge to use this feature.",
+      );
+      return;
+    }
     if (connected) {
       await serialManager.close();
     } else {
