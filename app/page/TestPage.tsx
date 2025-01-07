@@ -32,6 +32,10 @@ export function TestPage() {
           setOHW(true);
           SetVersion(version.version);
           setInitialized(version.features?.initialized ?? false);
+
+          if (version.features?.initialized) {
+            setMnemonic("Initialization has been completed. Scroll down to use more functions.")
+          }
           break;
         }
         case "initWalletResponse": {
