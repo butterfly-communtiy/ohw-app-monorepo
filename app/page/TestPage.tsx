@@ -17,7 +17,8 @@ export function TestPage() {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [message, setMessage] = useState("");
-  const [initialized, setInitialized] = useState(false);
+  const [initialized, setInitialized] = useState(true);
+  const [ohw, setOHW] = useState(false);
   const [signature, setSignature] = useState("");
   const [path, setPath] = useState("m/44'/60'/0'/0/0");
 
@@ -27,6 +28,7 @@ export function TestPage() {
       switch (data.payload.oneofKind) {
         case "versionResponse": {
           const version = data.payload.versionResponse;
+          setOHW(true);
           setInitialized(version.features?.initialized ?? false);
           break;
         }
@@ -167,7 +169,7 @@ export function TestPage() {
           id: 0,
           preHash: ethers.getBytesCopy(hash),
           path: path,
-          message:  ethers.getBytesCopy(hash),
+          message: ethers.getBytesCopy(hash),
         }),
       },
     });
@@ -203,12 +205,42 @@ export function TestPage() {
         </button>
       </div>
 
+      <div className="flex" style={{ height: "50px" }}></div>
+
+      <div className="flex">
+        <div className="w-1/4 text-right pr-4 pt-2">OHW Status: </div>
+        <div className="w-3/4 p-2">
+          {ohw ? (
+            <span className="text-green-600">OK</span>
+          ) : (
+            <span className="text-red-600">Not Found</span>
+          )}
+          {!ohw && connected && (
+            <span className="text-red-600">
+              &nbsp;ohw firmware, Please{" "}
+              <a
+                href="https://github.com/butterfly-communtiy/ohw-elf-firmware"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                check the manual
+              </a>
+              !
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="flex" style={{ height: "20px" }}></div>
+
       <div className="flex">
         <div className="w-1/4 text-right pr-4 pt-2">Mnemonic :</div>
         <textarea
           className="w-3/4 p-2 border rounded min-h-[100px] resize-both"
           style={{ height: "100px" }}
           value={mnemonic}
+          disabled={initialized}
           onChange={(e) => setMnemonic(e.target.value)}
         />
       </div>
@@ -219,6 +251,7 @@ export function TestPage() {
           className="w-3/4 p-2 border rounded"
           type="text"
           value={password}
+          disabled={initialized}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
