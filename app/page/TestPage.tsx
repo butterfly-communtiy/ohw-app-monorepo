@@ -19,6 +19,7 @@ export function TestPage() {
   const [message, setMessage] = useState("");
   const [initialized, setInitialized] = useState(true);
   const [ohw, setOHW] = useState(false);
+  const [version, SetVersion] = useState("");
   const [signature, setSignature] = useState("");
   const [path, setPath] = useState("m/44'/60'/0'/0/0");
 
@@ -29,6 +30,7 @@ export function TestPage() {
         case "versionResponse": {
           const version = data.payload.versionResponse;
           setOHW(true);
+          SetVersion(version.version);
           setInitialized(version.features?.initialized ?? false);
           break;
         }
@@ -211,7 +213,7 @@ export function TestPage() {
         <div className="w-1/4 text-right pr-4 pt-2">OHW Status: </div>
         <div className="w-3/4 p-2">
           {ohw ? (
-            <span className="text-green-600">OK</span>
+            <span className="text-green-600">OK Version: {version}</span>
           ) : (
             <span className="text-red-600">Not Found</span>
           )}
