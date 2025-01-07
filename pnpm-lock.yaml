@@ -32,6 +32,9 @@ importers:
       react-router:
         specifier: ^7.0.2
         version: 7.0.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      web-serial-polyfill:
+        specifier: ^1.0.15
+        version: 1.0.15
     devDependencies:
       '@eslint/js':
         specifier: ^9.17.0
@@ -2382,6 +2385,9 @@ packages:
         optional: true
       terser:
         optional: true
+
+  web-serial-polyfill@1.0.15:
+    resolution: {integrity: sha512-usZN7kGRkEWr8DzRWxW+og55L1fHo4hNIwxCSCfWKpM+i0L+2AwzupMvkDFxnJNqUFOhLaD3PlgAOJxUOUrAoA==}
 
   which-boxed-primitive@1.1.0:
     resolution: {integrity: sha512-Ei7Miu/AXe2JJ4iNF5j/UphAgRoma4trE6PtisM09bPygb3egMH3YLW/befsWb1A1AxvNSFidOFTB18XtnIIng==}
@@ -5029,6 +5035,8 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.10.2
       fsevents: 2.3.3
+
+  web-serial-polyfill@1.0.15: {}
 
   which-boxed-primitive@1.1.0:
     dependencies:
