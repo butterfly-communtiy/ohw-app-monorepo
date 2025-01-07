@@ -17,7 +17,7 @@ export function TestPage() {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [message, setMessage] = useState("");
-  const [initialized, setInitialized] = useState(true);
+  const [initialized, setInitialized] = useState(false);
   const [ohw, setOHW] = useState(false);
   const [version, SetVersion] = useState("");
   const [signature, setSignature] = useState("");
@@ -34,7 +34,9 @@ export function TestPage() {
           setInitialized(version.features?.initialized ?? false);
 
           if (version.features?.initialized) {
-            setMnemonic("Initialization has been completed. Scroll down to use more functions.")
+            setMnemonic(
+              "Initialization has been completed. Scroll down to use more functions.",
+            );
           }
           break;
         }
@@ -269,7 +271,7 @@ export function TestPage() {
       </div>
 
       <div className="flex">
-        {!initialized && (
+        {(!initialized && ohw) && (
           <>
             <div className="w-1/4"></div>
             <div className="w-3/4 flex space-x-4">
@@ -290,7 +292,7 @@ export function TestPage() {
         )}
       </div>
 
-      <div className="flex" style={{ height: "1000px" }}></div>
+      <div className="flex" style={{ height: "300px" }}></div>
 
       <div className="flex">
         <div className="w-1/4 text-right pr-4 pt-2">Path :</div>
@@ -305,12 +307,14 @@ export function TestPage() {
       <div className="flex">
         <div className="w-1/4"></div>
         <div className="w-3/4 flex space-x-4">
-          <button
-            onClick={derivePublicKey}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-          >
-            Get Address
-          </button>
+          {initialized && (
+            <button
+              onClick={derivePublicKey}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+            >
+              Get Address
+            </button>
+          )}
         </div>
       </div>
 
@@ -320,11 +324,10 @@ export function TestPage() {
           className="w-3/4 p-2 border rounded"
           type="text"
           value={address}
-          onChange={(e) => setAddress(e.target.value)}
         />
       </div>
 
-      <div className="flex" style={{ height: "1000px" }}></div>
+      <div className="flex" style={{ height: "300px" }}></div>
 
       <div className="flex">
         <div className="w-1/4 text-right pr-4 pt-2">Message :</div>
@@ -339,12 +342,14 @@ export function TestPage() {
       <div className="flex">
         <div className="w-1/4"></div>
         <div className="w-3/4 flex space-x-4">
-          <button
-            onClick={signMessage}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-          >
-            Sign Message
-          </button>
+          {initialized && (
+            <button
+              onClick={signMessage}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+            >
+              Sign Message
+            </button>
+          )}
         </div>
       </div>
 
@@ -354,7 +359,6 @@ export function TestPage() {
           className="w-3/4 p-2 border rounded"
           type="text"
           value={signature}
-          onChange={(e) => setSignature(e.target.value)}
         />
       </div>
 
