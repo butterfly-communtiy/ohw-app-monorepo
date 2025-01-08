@@ -14,4 +14,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ["web-serial-polyfill"],
   },
+  build: {
+    target: 'esnext',
+  },
 });
