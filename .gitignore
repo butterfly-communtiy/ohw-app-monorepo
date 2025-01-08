@@ -8,3 +8,4 @@ build/
 .eslintcache
 
 # app/protocols/protobuf/*.ts
+.env
