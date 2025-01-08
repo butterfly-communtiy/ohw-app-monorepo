@@ -9,6 +9,9 @@ import {
   VersionRequest,
 } from "~/protocols/protobuf/ohw";
 import { ethers } from "ethers";
+import "web-serial-polyfill";
+import { serial } from 'web-serial-polyfill';
+
 
 export function TestPage() {
   const [serialManager] = useState(() => new SerialManager());
@@ -103,6 +106,13 @@ export function TestPage() {
 
   const handleConnect = async () => {
     if (!navigator.serial) {
+      Object.defineProperty(navigator, 'serial', {
+        value: serial,
+        configurable: true,
+        writable: true,
+      });
+    }
+    if (!navigator.serial || !navigator.usb) {
       alert(
         "Web Serial API is only supported in Chrome/Edge browsers. Please switch to Chrome or Edge to use this feature.",
       );
@@ -271,7 +281,7 @@ export function TestPage() {
       </div>
 
       <div className="flex">
-        {(!initialized && ohw) && (
+        {!initialized && ohw && (
           <>
             <div className="w-1/4"></div>
             <div className="w-3/4 flex space-x-4">
