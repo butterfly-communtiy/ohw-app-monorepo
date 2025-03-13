@@ -468,311 +468,304 @@ export function TestPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 space-y-4">
+    <div className="min-h-screen bg-gray-50 py-8">
       {Dialog}
-      <div className="flex justify-end mb-4">
-        <button
-          onClick={() =>
-            window.open("https://espressif.github.io/esptool-js/", "_blank")
-          }
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors mr-[20px]"
-        >
-          Flash Firmware
-        </button>
-
-        <button
-          onClick={handleConnect}
-          className={`px-4 py-2 rounded-md flex items-center space-x-2 ${
-            connected
-              ? "bg-green-500 hover:bg-green-600"
-              : "bg-gray-500 hover:bg-gray-600"
-          } text-white transition-colors`}
-        >
-          <div
-            className={`w-2 h-2 rounded-full ${
-              connected ? "bg-green-200" : "bg-gray-300"
-            }`}
-          />
-          <span>{connected ? "Connected" : "Connect"}</span>
-        </button>
-      </div>
-
-      <div className="flex" style={{ height: "20px" }}></div>
-
-      <div className="flex justify-center flex-col items-center">
-        <h1 className="text-3xl font-bold">OHW Test Page</h1>
-        <div className="mt-4 max-w-2xl text-center text-red-500">
-          <p className="font-bold mb-2">
-            ⚠️ WARNING: Developer Test Page Only ⚠️
-          </p>
-          <p>This is a test environment for developers. Please:</p>
-          <ul className="mt-2">
-            <li>
-              DO NOT use imported or generated mnemonic phrases to hold any
-              cryptocurrency
-            </li>
-            <li>⚠️ Any data may be cleared without notice ⚠️</li>
-            <li></li>
-          </ul>
-          <p className="mb-2 text-center">
-          Please note that you are using an OHW development board and the chip
-          is not security locked and does not have SE security components.
-        </p>
-        </div>
-        
-        <p className="mb-2  text-center">
-          In the near future we will release a tutorial that will teach you how
-          to lock your own chip. We are working on a hardware wallet with the
-          highest level of security in the world, so stay tuned.
-        </p>
-        <div className="mt-4 max-w-2xl text-center">
-          <a
-            href="https://github.com/butterfly-communtiy/ohw-elf-firmware/tree/master/doc/start"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 underline hover:text-blue-800 transition-colors"
-          >
-            User Guide
-          </a>
-        </div>
-      </div>
-
-      <div className="flex" style={{ height: "20px" }}></div>
-
-      <div className="flex">
-        <div className="w-1/4 text-right pr-4 pt-2">OHW Status: </div>
-        <div className="w-3/4 p-2">
-          {ohw ? (
-            <span className="text-green-600">OK Version: {version}</span>
-          ) : (
-            <span className="text-red-600">Not Found</span>
-          )}
-          {!ohw && connected && (
-            <span className="text-red-600">
-              &nbsp;ohw firmware, Please{" "}
-              <a
-                href="https://github.com/butterfly-communtiy/ohw-elf-firmware"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline"
-              >
-                check the manual
-              </a>
-              !
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div className="flex" style={{ height: "20px" }}></div>
-
-      <div className="flex">
-        <div className="w-1/4 text-right pr-4 pt-2">Mnemonic :</div>
-        <textarea
-          className="w-3/4 p-2 border rounded min-h-[100px] resize-both"
-          style={{ height: "100px" }}
-          value={mnemonic}
-          disabled={initialized}
-          onChange={(e) => setMnemonic(e.target.value)}
-        />
-      </div>
-
-      <div className="flex">
-        <div className="w-1/4 text-right pr-4 pt-2">Password :</div>
-        <input
-          className="w-3/4 p-2 border rounded"
-          type="text"
-          value={password}
-          disabled={initialized}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-
-      <div className="flex">
-        {!initialized && ohw && (
-          <>
-            <div className="w-1/4"></div>
-            <div className="w-3/4 flex space-x-4">
-              <button
-                onClick={initWalletCustom}
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-              >
-                Import
-              </button>
-              <button
-                onClick={initWallet}
-                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
-              >
-                Generate
-              </button>
-            </div>
-          </>
-        )}
-      </div>
-
-      <div className="flex" style={{ height: "150px" }}></div>
-
-      <div className="flex">
-        <div className="w-1/4 text-right pr-4 pt-2">Path :</div>
-        <input
-          className="w-3/4 p-2 border rounded"
-          type="text"
-          value={path}
-          onChange={(e) => setPath(e.target.value)}
-        />
-      </div>
-
-      <div className="flex">
-        <div className="w-1/4"></div>
-        <div className="w-3/4 flex space-x-4">
-          {initialized && (
+      
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Header Section */}
+        <div className="mb-8 flex justify-between items-center">
+          <h1 className="text-3xl font-bold text-gray-900">OHW Test Page</h1>
+          <div className="flex gap-4">
             <button
-              onClick={derivePublicKey}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+              onClick={() => window.open("https://espressif.github.io/esptool-js/", "_blank")}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Get Address
+              Flash Firmware
             </button>
-          )}
-        </div>
-      </div>
-
-      <div className="flex">
-        <div className="w-1/4 text-right pr-4 pt-2">Address :</div>
-        <input
-          className="w-3/4 p-2 border rounded"
-          type="text"
-          value={address}
-          readOnly
-        />
-      </div>
-
-      <div className="flex" style={{ height: "150px" }}></div>
-
-      <div className="flex">
-        <div className="w-1/4 text-right pr-4 pt-2">Message :</div>
-        <textarea
-          className="w-3/4 p-2 border rounded min-h-[100px] resize-both"
-          style={{ height: "100px" }}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-      </div>
-
-      <div className="flex">
-        <div className="w-1/4"></div>
-        <div className="w-3/4 flex space-x-4">
-          {initialized && (
             <button
-              onClick={signMessage}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+              onClick={handleConnect}
+              className={`px-4 py-2 rounded-lg flex items-center gap-2 ${
+                connected ? "bg-green-600 hover:bg-green-700" : "bg-gray-600 hover:bg-gray-700"
+              } text-white transition-colors`}
             >
-              Sign Message
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className="flex">
-        <div className="w-1/4 text-right pr-4 pt-2">Signature :</div>
-        <input
-          className="w-3/4 p-2 border rounded"
-          type="text"
-          value={signature}
-          readOnly
-        />
-      </div>
-
-      <div className="flex" style={{ height: "80px" }}></div>
-
-      <div className="flex">
-        <div className="w-1/4 text-right pr-4 pt-2">WalletConnect :</div>
-        <input
-          className="w-3/4 p-2 border rounded resize-both"
-          value={walletKitUri}
-          onChange={(e) => setWalletKitUri(e.target.value)}
-        />
-      </div>
-
-      <div className="flex">
-        <div className="w-1/4"></div>
-        <div className="w-3/4 flex space-x-4">
-          {address && walletKitUri && (
-            <button
-              onClick={walletKitConnect}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-            >
-              {walletConnect ? "Re Add" : "Add"}
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className="flex mt-8">
-        <div className="w-1/4 text-right pr-4 pt-2">Active Sessions:</div>
-        <div className="w-3/4">
-          {activeSessions.length === 0 ? (
-            <div className="text-gray-500">No active sessions</div>
-          ) : (
-            <div className="space-y-4">
-              {activeSessions.map((session) => (
-                <div
-                  key={session.topic}
-                  className="border rounded p-4 bg-white shadow-sm"
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="space-y-2">
-                      <div className="font-medium">
-                        {session.peer.metadata.name}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        Topic: {session.topic.slice(0, 10)}...
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        Connected:{" "}
-                        {new Date(session.expiry * 1000).toLocaleString()}
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => handleDisconnect(session.topic)}
-                      className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition-colors"
-                    >
-                      Disconnect
-                    </button>
-                  </div>
-                  <div className="mt-2 text-sm">
-                    <div className="text-gray-600">
-                      URL: {session.peer.metadata.url}
-                    </div>
-                    <div className="text-gray-600">
-                      Chains: {session.namespaces.eip155.chains?.join(", ")}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {activeSessions.length > 0 && (
-        <div className="flex mt-4">
-          <div className="w-1/4"></div>
-          <div className="w-3/4">
-            <button
-              onClick={async () => {
-                for (const session of activeSessions) {
-                  await handleDisconnect(session.topic);
-                }
-              }}
-              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
-            >
-              Disconnect All
+              <div className={`w-2 h-2 rounded-full ${connected ? "bg-green-200" : "bg-gray-300"}`} />
+              <span>{connected ? "Connected" : "Connect"}</span>
             </button>
           </div>
         </div>
-      )}
 
-      <div className="flex" style={{ height: "1000px" }}></div>
+        {/* Warning Card */}
+        <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-xl shadow-sm p-8 mb-8 border border-amber-200">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 bg-amber-200 rounded-lg">
+                <svg className="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-amber-900">Development Environment Notice</h2>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="bg-white bg-opacity-50 rounded-lg p-5 border border-amber-200">
+                <h3 className="text-lg font-semibold text-amber-800 mb-3">Security Precautions</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                    <span className="text-amber-700">Do not use real assets or import production mnemonics in this environment</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                    <span className="text-amber-700">All data may be cleared during the development phase</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-white bg-opacity-50 rounded-lg p-5 border border-amber-200">
+                <h3 className="text-lg font-semibold text-amber-800 mb-3">Development Board Status</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                    <span className="text-amber-700">Current OHW development board is running without security locks or SE security components enabled. </span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                    <span className="text-amber-700">Stay tuned for upcoming tutorials on chip security locking and high-security hardware wallet solutions.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-6 text-center">
+              <a
+                href="https://github.com/butterfly-communtiy/ohw-elf-firmware/tree/master/doc/start"
+                target="_blank"
+                rel="noopener noreferrer" 
+                className="inline-flex items-center px-6 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition-colors duration-200 group"
+              >
+                <span className="font-medium">View Documentation</span>
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Device Status Card */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold mb-4">Device Status</h2>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-600">OHW Status:</span>
+                <div>
+                  {ohw ? (
+                    <span className="text-green-600">OK Version: {version}</span>
+                  ) : (
+                    <span className="text-red-600">Not Found</span>
+                  )}
+                </div>
+              </div>
+              {!ohw && connected && (
+                <div className="text-red-600 text-sm">
+                  Missing ohw firmware. Please{" "}
+                  <a
+                    href="https://github.com/butterfly-communtiy/ohw-elf-firmware"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    check the manual
+                  </a>
+                  !
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Wallet Initialization Card */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold mb-4">Wallet Initialization</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Mnemonic</label>
+                <textarea
+                  className="w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  rows={4}
+                  value={mnemonic}
+                  disabled={initialized}
+                  onChange={(e) => setMnemonic(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <input
+                  type="password"
+                  className="w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  value={password}
+                  disabled={initialized}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              {!initialized && ohw && (
+                <div className="flex gap-4">
+                  <button
+                    onClick={initWalletCustom}
+                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Import
+                  </button>
+                  <button
+                    onClick={initWallet}
+                    className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    Generate
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Address Management Card */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold mb-4">Address Management</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Derivation Path</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  value={path}
+                  onChange={(e) => setPath(e.target.value)}
+                />
+              </div>
+              {initialized && (
+                <button
+                  onClick={derivePublicKey}
+                  className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Get Address
+                </button>
+              )}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg bg-gray-50"
+                  value={address}
+                  readOnly
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Signing Card */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold mb-4">Message Signing</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                <textarea
+                  className="w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  rows={4}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+              </div>
+              {initialized && (
+                <button
+                  onClick={signMessage}
+                  className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Sign Message
+                </button>
+              )}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Signature</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded-lg bg-gray-50"
+                  value={signature}
+                  readOnly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* WalletConnect Card */}
+        <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
+          <h2 className="text-xl font-semibold mb-4">WalletConnect</h2>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">WalletConnect URI</label>
+              <div className="flex gap-4">
+                <input
+                  type="text"
+                  className="flex-1 p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  value={walletKitUri}
+                  onChange={(e) => setWalletKitUri(e.target.value)}
+                />
+                {address && walletKitUri && (
+                  <button
+                    onClick={walletKitConnect}
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    {walletConnect ? "Re Add" : "Add"}
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-medium mb-2">Active Sessions</h3>
+              {activeSessions.length === 0 ? (
+                <div className="text-gray-500">No active sessions</div>
+              ) : (
+                <div className="space-y-4">
+                  {activeSessions.map((session) => (
+                    <div key={session.topic} className="border rounded-lg p-4">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <div className="font-medium">{session.peer.metadata.name}</div>
+                          <div className="text-sm text-gray-500">
+                            Topic: {session.topic.slice(0, 10)}...
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            URL: {session.peer.metadata.url}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            Chains: {session.namespaces.eip155.chains?.join(", ")}
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => handleDisconnect(session.topic)}
+                          className="px-3 py-1 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition-colors"
+                        >
+                          Disconnect
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                  {activeSessions.length > 1 && (
+                    <button
+                      onClick={async () => {
+                        for (const session of activeSessions) {
+                          await handleDisconnect(session.topic);
+                        }
+                      }}
+                      className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                    >
+                      Disconnect All
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
