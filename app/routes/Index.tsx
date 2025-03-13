@@ -2,7 +2,7 @@ import { Layout } from "../components/Layout";
 import { Home } from "../components/Home";
 
 export function meta() {
-  return [{ title: "OHW - Open Hardware Wallet" }, { name: "description", content: "安全、开源的硬件钱包解决方案" }];
+  return [{ title: "OHW - Open Hardware Wallet" }, { name: "description", content: "Secure, open-source hardware wallet solution" }];
 }
 
 export default function Index() {
