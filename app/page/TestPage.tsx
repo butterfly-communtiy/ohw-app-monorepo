@@ -501,7 +501,6 @@ export function TestPage() {
 
       <div className="flex justify-center flex-col items-center">
         <h1 className="text-3xl font-bold">OHW Test Page</h1>
-
         <div className="mt-4 max-w-2xl text-center text-red-500">
           <p className="font-bold mb-2">
             ⚠️ WARNING: Developer Test Page Only ⚠️
@@ -513,10 +512,19 @@ export function TestPage() {
               cryptocurrency
             </li>
             <li>⚠️ Any data may be cleared without notice ⚠️</li>
-            <li>The chip is not locked, so it is not secure</li>
+            <li></li>
           </ul>
+          <p className="mb-2 text-center">
+          Please note that you are using an OHW development board and the chip
+          is not security locked and does not have SE security components.
+        </p>
         </div>
-
+        
+        <p className="mb-2  text-center">
+          In the near future we will release a tutorial that will teach you how
+          to lock your own chip. We are working on a hardware wallet with the
+          highest level of security in the world, so stay tuned.
+        </p>
         <div className="mt-4 max-w-2xl text-center">
           <a
             href="https://github.com/butterfly-communtiy/ohw-elf-firmware/tree/master/doc/start"
