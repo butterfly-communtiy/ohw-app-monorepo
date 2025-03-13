@@ -397,7 +397,7 @@ export function TestPage() {
         oneofKind: "initRequest",
         initRequest: InitWalletRequest.create({
           length: 24,
-          password: "",
+          password: password,
         }),
       },
     });
@@ -515,6 +515,17 @@ export function TestPage() {
             <li>⚠️ Any data may be cleared without notice ⚠️</li>
             <li>The chip is not locked, so it is not secure</li>
           </ul>
+        </div>
+
+        <div className="mt-4 max-w-2xl text-center">
+          <a
+            href="https://github.com/butterfly-communtiy/ohw-elf-firmware/tree/master/doc/start"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline hover:text-blue-800 transition-colors"
+          >
+            User Guide
+          </a>
         </div>
       </div>
 
